@@ -1,4 +1,4 @@
-package client_1;
+package client;
 import java.io.*;
 import java.net.*;
 import java.util.logging.Level;
@@ -12,6 +12,7 @@ public class Client extends javax.swing.JFrame {
     Socket socket;
     PrintWriter out;
     BufferedReader in;
+    String s="";
     int n;
     int[][] array;
     
@@ -41,6 +42,8 @@ public class Client extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("PORT NO");
+
+        txtPort.setText("88");
 
         btnStart.setText("Connect");
         btnStart.addActionListener(new java.awt.event.ActionListener() {
@@ -98,6 +101,8 @@ public class Client extends javax.swing.JFrame {
         );
 
         jLabel3.setText("IP Address");
+
+        txtIP.setText("127.0.0.1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -190,10 +195,24 @@ public class Client extends javax.swing.JFrame {
         }
 
             System.out.println("Matrix sent to server.");
+            
+            openGraphFrame(s,n);
     }//GEN-LAST:event_btnSendActionPerformed
 
+    private void openGraphFrame(String fileName, int length) {
+    Graph graphFrame = new Graph(fileName, length);
+    graphFrame.setVisible(true);
+    graphFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+            Client.this.setVisible(true);
+        }
+    });
+    this.setVisible(false);
+}
+
     private void btnFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFileActionPerformed
-        String s="";
+        
         // Tạo một đối tượng JFileChooser
         JFileChooser fileChooser = new JFileChooser();
         
@@ -218,7 +237,7 @@ public class Client extends javax.swing.JFrame {
         ReadFile reader = new ReadFile();
         
         // Gọi phương thức read và lưu kết quả vào biến array
-        array = reader.read(s,n,this.array);
+        array = reader.read(s,n);
         n=array.length;
         StringBuilder sb = new StringBuilder();
             sb.append(n+"\n");

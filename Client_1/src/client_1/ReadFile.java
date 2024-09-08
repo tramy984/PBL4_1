@@ -1,10 +1,13 @@
-package client_1;
+package client;
 
 import java.io.*;
 
 public class ReadFile {
-    public int[][] read(String s,int n,int[][] array ){
-        try (BufferedReader br = new BufferedReader(new FileReader(s))) {
+    public int[][] read(String s,int n )
+    {
+        int[][] array=null;
+        try (BufferedReader br = new BufferedReader(new FileReader(s))) 
+        {
             // Read the first line and parse it as an integer
             n = Integer.parseInt(br.readLine().trim());
 
